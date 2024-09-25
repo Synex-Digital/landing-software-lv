@@ -14,14 +14,14 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('dashboard.admin.profile');
+        return view('dashboard.pages.profile');
     }
 
     public function login()
     {
         if(!Auth::check()){
             $setting = Setting::first();
-            return view('dashboard.admin.login',[
+            return view('dashboard.auth.login',[
                 'setting' => $setting
             ]);
         }else{
