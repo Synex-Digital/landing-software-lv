@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ThemeController;
-
-
+use App\Http\Controllers\Admin\SettingController;
 
 Auth::routes();
 
@@ -21,9 +20,10 @@ Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 Route::middleware(['auth'])->group(function () {
     // Admin
-    Route::get('/profile', [AdminController::class, 'index'])->name('admin.profile');
-
-
+    Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::post('/profile/update', [AdminController::class, 'profile_update'])->name('admin.profile_update');
+    //settings
+    Route::get('/settings', [SettingController::class, 'index'])->name('setting.index');
     //Esmail Commit
     Route::get('/appearance', [ThemeController::class, 'index'])->name('appearance');
 });
