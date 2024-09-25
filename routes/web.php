@@ -6,6 +6,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ThemeController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\LandingPageController;
 
 Auth::routes();
 
@@ -24,6 +25,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/update', [AdminController::class, 'profile_update'])->name('admin.profile_update');
     //settings
     Route::get('/settings', [SettingController::class, 'index'])->name('setting.index');
+    Route::post('/settings/update', [SettingController::class, 'update'])->name('setting.update');
+    //landing page
+    Route::resource('/landing-page', LandingPageController::class);
     //Esmail Commit
     Route::get('/appearance', [ThemeController::class, 'index'])->name('appearance');
 });

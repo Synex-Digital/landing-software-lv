@@ -4,7 +4,17 @@
 <div class="deznav">
     <div class="deznav-scroll">
         <ul class="metismenu" id="menu">
-            <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+            <li><a href="{{ route('welcome') }}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-networking"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li><a href="{{ route('landing-page.index') }}" class="ai-icon" aria-expanded="false">
+                    <i class="flaticon-381-notepad"></i>
+                    <span class="nav-text">Landing Page</span>
+                </a>
+            </li>
+            {{-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                     <i class="flaticon-381-networking"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
@@ -127,7 +137,7 @@
                     <i class="flaticon-381-layer-1"></i>
                     <span class="nav-text">Themes</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
 
         <div class="copyright">
