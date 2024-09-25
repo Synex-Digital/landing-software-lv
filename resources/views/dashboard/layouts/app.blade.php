@@ -19,6 +19,7 @@
         @yield('title')
     </title>
 	<!-- Favicon icon -->
+    @yield('style')
     @include('dashboard.layouts.style')
 </head>
 
@@ -93,6 +94,7 @@
 	<!-- Required vendors -->
 
     @include('dashboard.layouts.script')
+    @yield('script')
 </body>
 
 </html>

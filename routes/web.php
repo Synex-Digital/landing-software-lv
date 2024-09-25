@@ -15,7 +15,7 @@ Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
 Route::post('/welcome/store', [WelcomeController::class, 'welcome_store'])->name('welcome.store');
 //login
 Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
-Route::post('/login', [AdminController::class, 'login_check'])->name('admin.login_check');
+Route::post('/login/check', [AdminController::class, 'login_check'])->name('admin.login_check');
 Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 
