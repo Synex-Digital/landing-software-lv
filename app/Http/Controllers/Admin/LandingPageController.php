@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\LandingPage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,7 @@ class LandingPageController extends Controller
      */
     public function index()
     {
-        $landing_pages = LandingPage::latest()->paginate(2);
+        $landing_pages = LandingPage::latest()->paginate(10);
         return view('dashboard.pages.landing_page.index',[
             'landing_pages' => $landing_pages
         ]);

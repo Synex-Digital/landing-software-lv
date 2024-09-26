@@ -4,9 +4,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ColorAndSizeController;
+use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\LandingPageController;
 use App\Http\Controllers\Admin\ThemeController;
 use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\LandingPageController;
+
 
 Auth::routes();
 
@@ -28,6 +31,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/settings/update', [SettingController::class, 'update'])->name('setting.update');
     //landing page
     Route::resource('/landing-page', LandingPageController::class);
+    //inventory
+    Route::resource('/inventory', InventoryController::class);
+    //color and size
+    Route::get('/color-and-size', [ColorAndSizeController::class, 'index'])->name('color_and_size.index');
+    Route::post('/color/store', [ColorAndSizeController::class, 'color_store'])->name('color.store');
     //Esmail Commit
     Route::get('/appearance', [ThemeController::class, 'index'])->name('appearance');
     Route::get('/preview/{slug}', [ThemeController::class, 'preview'])->name('appearance.preview');

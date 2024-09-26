@@ -21,51 +21,52 @@
                 <i class="fa fa-plus color-info"></i>
             </span>Create
         </button>
-        <div class="col-lg-12 mt-5">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Landing Pages</h4>
+
+    </div>
+    <div class="col-lg-12 mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Landing Pages</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsvie">
+                    <table class="table table-hover table-responsive-sm" >
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Theme</th>
+                                <th>Name</th>
+                                <th>SKU</th>
+                                <th>Price</th>
+                                <th>Inventory Feature</th>
+                                <th>Status </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($landing_pages as $key => $data)
+                            <tr>
+                                <th class="text-black">{{ $loop->iteration  }}</th>
+                                <td>{{ $data->theme_slug }}</td>
+                                <td>{{ $data->name }}</td>
+                                <td>{{ $data->sku }}</td>
+                                <td>{{ $data->price }}</td>
+                                <td>{{ $data->inventory_feature == 1? 'show' : 'hide' }}</td>
+                                <td>{{ $data->status }} </td>
+                                <td>
+                                    <a data-value="{{ $data}}"   class="btn editBtn btn-primary btn-sm">Edit</a>
+                                    <a href="{{ route('landing-page.destroy', $data->id) }}"  data-bs-target="#deleteModal" data-bs-toggle="modal"  class="btn btn-danger btn-sm deleteBtn">Delete</a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="8">No Data</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsvie">
-                        <table class="table table-hover table-responsive-sm" >
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Theme</th>
-                                    <th>Name</th>
-                                    <th>SKU</th>
-                                    <th>Price</th>
-                                    <th>Inventory Feature</th>
-                                    <th>Status </th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($landing_pages as $key => $data)
-                                <tr>
-                                    <th class="text-black">{{ $loop->iteration  }}</th>
-                                    <td>{{ $data->theme_slug }}</td>
-                                    <td>{{ $data->name }}</td>
-                                    <td>{{ $data->sku }}</td>
-                                    <td>{{ $data->price }}</td>
-                                    <td>{{ $data->inventory_feature == 1? 'show' : 'hide' }}</td>
-                                    <td>{{ $data->status }} </td>
-                                    <td>
-                                        <a data-value="{{ $data}}"   class="btn editBtn btn-primary btn-sm">Edit</a>
-                                        <a href="{{ route('landing-page.destroy', $data->id) }}"  data-bs-target="#deleteModal" data-bs-toggle="modal"  class="btn btn-danger btn-sm deleteBtn">Delete</a>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="8">No Data</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                    {{ $landing_pages->links('pagination::bootstrap-5') }}
-                </div>
+                {{ $landing_pages->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
