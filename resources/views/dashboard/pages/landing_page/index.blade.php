@@ -258,7 +258,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                    <button id="udpateBtn" type="submit" class="btn btn-primary">Update</button>
+                    <button id="updateBtn" type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>
@@ -280,7 +280,7 @@
                 $(this).addClass('disabled').text('Creating...');
         });
         //update button disable
-        $('#udpateBtn').on('click', function() {
+        $('#updateBtn').on('click', function() {
                 $(this).addClass('disabled').text('Updating...');
         });
         //edit data show with modal

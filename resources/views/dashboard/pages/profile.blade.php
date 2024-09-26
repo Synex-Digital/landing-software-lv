@@ -96,7 +96,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary float-end mt-3">Update</button>
+                <button id="updateBtn" type="submit" class="btn btn-primary float-end mt-3">Update</button>
             </form>
             </div>
         </div>
@@ -106,4 +106,16 @@
 
 
 
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        //update button disable
+        $('#updateBtn').on('click', function() {
+                $(this).addClass('disabled').text('Updating...');
+        });
+
+    });
+</script>
 @endsection
