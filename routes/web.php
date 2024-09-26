@@ -36,6 +36,12 @@ Route::middleware(['auth'])->group(function () {
     //color and size
     Route::get('/color-and-size', [ColorAndSizeController::class, 'index'])->name('color_and_size.index');
     Route::post('/color/store', [ColorAndSizeController::class, 'color_store'])->name('color.store');
+    Route::post('/color/update', [ColorAndSizeController::class, 'color_update'])->name('color.update');
+    Route::post('/color/destroy', [ColorAndSizeController::class, 'color_destroy'])->name('color.destroy');
+    //size
+    Route::post('/size/store', [ColorAndSizeController::class, 'size_store'])->name('size.store');
+    Route::post('/size/update', [ColorAndSizeController::class, 'size_update'])->name('size.update');
+    Route::post('/size/destroy', [ColorAndSizeController::class, 'size_destroy'])->name('size.destroy');
     //Esmail Commit
     Route::get('/appearance', [ThemeController::class, 'index'])->name('appearance');
     Route::get('/preview/{slug}', [ThemeController::class, 'preview'])->name('appearance.preview');
