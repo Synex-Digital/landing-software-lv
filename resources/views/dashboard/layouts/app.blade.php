@@ -18,7 +18,12 @@
     <title> {{ config('app.name') }}
         @yield('title')
     </title>
-    <!-- Favicon icon -->
+
+	<!-- Favicon icon -->
+    @yield('style')
+
+
+
     @include('dashboard.layouts.style')
 </head>
 
