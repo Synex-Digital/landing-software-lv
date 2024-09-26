@@ -92,9 +92,38 @@
         Scripts
     ***********************************-->
 	<!-- Required vendors -->
+    <div class="modal fade" id="deleteModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Warning !</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success light" data-bs-dismiss="modal">Close</button>
+                    <form id="deleteForm" action="" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button id="deleteSubmitBtn" type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @include('dashboard.layouts.script')
     @yield('script')
+    <script>
+        $(document).ready(function() {
+            $('#deleteSubmitBtn').on('click', function() {
+                $(this).text('Deleting...').addClass('disabled');
+            });
+        });
+    </script>
 </body>
 
 </html>
