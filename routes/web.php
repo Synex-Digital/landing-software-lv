@@ -32,4 +32,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/appearance', [ThemeController::class, 'index'])->name('appearance');
     Route::get('/preview/{slug}', [ThemeController::class, 'preview'])->name('appearance.preview');
     Route::post('/zip_upload', [ThemeController::class, 'upload'])->name('zip.upload');
+    Route::get('/theme/delete/{slug}', [ThemeController::class, 'delete'])->name('theme.delete');
 });

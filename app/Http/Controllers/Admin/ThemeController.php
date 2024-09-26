@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
 use ZipArchive;
 
+use function PHPUnit\Framework\fileExists;
+
 class ThemeController extends Controller
 {
     public function index()
@@ -94,6 +96,24 @@ class ThemeController extends Controller
         return response()->json(['success' => false, 'message' => 'File upload failed!'], 500);
     }
 
+    public function delete($slug)
+    {
+        $publicPath = public_path('themes/' . $slug);
+        $basePath = base_path('resources/views/themes/' . $slug);
+
+        if (file_exists($basePath) && file_exists($publicPath)) {
+            if (is_dir($basePath)) {
+                $this->deleteDirectory($basePath);
+            }
+            if (is_dir($publicPath)) {
+                $this->deleteDirectory($publicPath);
+            }
+            return response()->json(['success' => true, 'message' => 'File uploaded and extracted successfully!']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Failed to open ZIP file!'], 500);
+        }
+    }
+
     private function copyHtmlToBladeIfNotExists($slug)
     {
         $viewPath = resource_path('views/theme/' . $slug . '/demo/');
@@ -107,5 +127,28 @@ class ThemeController extends Controller
         } else {
             return;
         }
+    }
+    private function deleteDirectory($dirPath)
+    {
+        if (!is_dir($dirPath)) {
+            return false;
+        }
+
+        // Recursively delete all files and sub-directories
+        foreach (scandir($dirPath) as $item) {
+            if ($item == '.' || $item == '..') {
+                continue;
+            }
+
+            $itemPath = $dirPath . DIRECTORY_SEPARATOR . $item;
+            if (is_dir($itemPath)) {
+                $this->deleteDirectory($itemPath); // Recursively delete sub-directory
+            } else {
+                unlink($itemPath); // Delete file
+            }
+        }
+
+        // Finally, remove the main directory
+        rmdir($dirPath);
     }
 }

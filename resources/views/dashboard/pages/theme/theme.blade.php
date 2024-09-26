@@ -3,8 +3,21 @@
     Profile
 @endsection
 @section('style')
-    <link href="{{ asset('dashboard_assets/vendor/lightgallery/css/lightgallery.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('dashboard_assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <style>
+        .card-close {
+            position: absolute !important;
+            top: 14px;
+            right: 18px;
+            background: #ebebeb;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    </style>
 @endsection
 @section('content')
     <!-- Theme Upload Modal -->
@@ -43,11 +56,37 @@
         </div>
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this item?
+                    <div id="messageDelete"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" id="confirmDelete" class="btn btn-danger d-flex align-items-center">
+                        <span>Delete</span>
+                        <div style="margin-left: 4px" class="d-none spinner-border spinner-border-sm" id="loading-two"
+                            role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="page-titles">
-        <h4>Themes</h4>
+        <h4>Landing Page</h4>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">appearance</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Appearance</a></li>
         </ol>
     </div>
     <div class="container">
@@ -72,8 +111,17 @@
             {{-- Card --}}
             @foreach ($themes as $theme)
                 <div class="col-md-6 col-lg-4">
-                    <div class="card rounded-md"
+                    <div class="card rounded-md position-relative"
                         style="{{ session('slug') == $theme['directory'] ? 'border: 4px solid #fd8f8f' : '' }}">
+                        {{-- <span class="card-close"><a href="#"></a>X</span> --}}
+                        <button type="button" class="card-close deleteModalX"
+                            data-bs-url="{{ route('theme.delete', $theme['directory']) }}">
+                            <svg width="16px" height="16px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" stroke="#000000">
+                                <line x1="16" y1="16" x2="48" y2="48" />
+                                <line x1="48" y1="16" x2="16" y2="48" />
+                            </svg>
+                        </button>
                         <div class="card-body">
                             <img src="{{ asset($theme['thumbnail_url']) }}" width="100%" alt="">
                         </div>
@@ -94,7 +142,6 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            // AJAX setup to include CSRF token in request headers
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -109,7 +156,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '{{ route('zip.upload') }}', // Adjust the route as needed
+                    url: '{{ route('zip.upload') }}',
                     data: formData,
                     contentType: false,
                     processData: false,
@@ -121,7 +168,7 @@
                                 '</p>');
                             setTimeout(function() {
                                 $('#message').html('<p style="color: green;">' +
-                                    'Preparing theme installation' +
+                                    'Preparing theme installation...' +
                                     '</p>');
                                 location.reload();
                             }, 1000);
@@ -131,11 +178,54 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        $('#loading').hide(); // Hide loading indicator
+                        $('#loading').hide();
                         $('#message').html('<p style="color: red;">File upload failed!</p>');
                     }
                 });
             });
+
+            var itemUrl;
+
+            $('.deleteModalX').on('click', function() {
+                itemUrl = $(this).attr('data-bs-url');
+                $('#deleteModal').modal('show');
+            });
+
+            $('#confirmDelete').on('click', function() {
+                $('#loading-two').removeClass('d-none');
+
+                $.ajax({
+                    url: itemUrl,
+                    type: 'GET',
+                    data: {
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        $('#loading-two').hide();
+                        $('#messageDelete').html('<p style="color: green;">' +
+                            `Deleting theme..` +
+                            '</p>');
+                        if (response.success) {
+                            setTimeout(function() {
+                                $('#messageDelete').html('<p style="color: green;">' +
+                                    'Deleted' +
+                                    '</p>');
+                                location.reload();
+                            }, 1500);
+                        } else {
+                            $('#messageDelete').html('<p style="color: green;">' +
+                                'Something is wrong' +
+                                '</p>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle any errors from the request
+                        console.log('Error:', error);
+                        alert('Something went wrong!');
+                    }
+                });
+            });
+
         })
     </script>
 @endsection
