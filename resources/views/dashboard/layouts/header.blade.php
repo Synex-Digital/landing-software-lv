@@ -859,7 +859,7 @@
 
 										</div>
 										<div class="text-center">
-											{{-- <h6 class="mb-0">{{ auth()->user()->name ? auth()->user()->name.'|':''}}{{Str::ucfirst(Auth::user()->role) }} </h6> --}}
+											<h6 class="mb-0">{{ auth()->user()->name ? auth()->user()->name.' | ':''}}{{Str::ucfirst(Auth::user()->role) }} </h6>
                                             <p>{{ Auth::user()->email }} </p>
 										</div>
 									</div>
