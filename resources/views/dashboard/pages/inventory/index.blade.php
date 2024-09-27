@@ -35,7 +35,7 @@
 
 
 {{-- create modal --}}
-<div class="modal fade createModal" tabindex="-1" role="dialog" aria-hidden="true">
+{{-- <div class="modal fade createModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -43,7 +43,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal">
                 </button>
             </div>
-            <form action="{{ route('landing-page.store') }}" method="POST">
+            <form  method="POST">
                 @csrf
             <div class="modal-body">
                     <div class="row">
@@ -51,11 +51,7 @@
                             <label for="" class="form-label">Select Product <span class="text-danger ">*</span> </label>
                             <select name="product_id" class="form-control default-select" id="sel1">
                                 <option value="">Select Product</option>
-                                @forelse ($products as  $data)
-                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                @empty
-                                    <option value=""> No Products</option>
-                                @endforelse
+
                             </select>
                         </div>
                         <div class="form-group col-6 mb-3">
@@ -130,9 +126,9 @@
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 {{-- edit modal --}}
-<div class="modal fade editModal" tabindex="-1" role="dialog" aria-hidden="true">
+{{-- <div class="modal fade editModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -224,5 +220,5 @@
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection
